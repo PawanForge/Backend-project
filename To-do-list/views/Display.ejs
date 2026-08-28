@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <title>To-Do List</title>
+</head>
+
+<body>
+
+    <h1>To-Do List</h1>
+
+    <!-- Add Todo -->
+    <form action="/add" method="POST">
+
+        <input
+            type="text"
+            name="content"
+            placeholder="Enter your task"
+            required
+        >
+
+        <button type="submit">Add</button>
+
+    </form>
+
+    <hr>
+
+    <!-- Todo List -->
+    <table>
+
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th class="action-column">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <% todos.forEach(function(todo) { %>
+
+                <tr>
+
+                    <!-- Task -->
+                    <td class="task-column">
+                        <%= todo.content %>
+                    </td>
+
+                    <!-- Actions -->
+                    <td class="action-column">
+
+                        <div class="action-buttons">
+
+                            <!-- Update -->
+                            <a href="/update/<%= todo._id %>">
+                                <button type="button">
+                                    Update
+                                </button>
+                            </a>
+
+                            <!-- Delete -->
+                            <form
+                                action="/delete/<%= todo._id %>"
+                                method="POST"
+                            >
+                                <button type="submit">
+                                    Delete
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            <% }); %>
+
+        </tbody>
+
+    </table>
+
+</body>
+
+</html>

@@ -1,0 +1,312 @@
+
+/* =========================
+   Reset
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   Body
+========================= */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+
+    min-height: 100vh;
+
+    padding: 40px 20px;
+}
+
+
+/* =========================
+   Heading
+========================= */
+
+h1 {
+    text-align: center;
+
+    font-size: 36px;
+
+    color: #222;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   Add Todo
+========================= */
+
+form[action="/add"] {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+form[action="/add"] input {
+    flex: 1;
+
+    padding: 13px 15px;
+
+    font-size: 16px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 7px;
+
+    outline: none;
+}
+
+form[action="/add"] input:focus {
+    border-color: #4f46e5;
+}
+
+form[action="/add"] button {
+    padding: 13px 25px;
+
+    background-color: #4f46e5;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+form[action="/add"] button:hover {
+    background-color: #3730a3;
+}
+
+
+/* =========================
+   HR
+========================= */
+
+hr {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto 25px;
+
+    border: none;
+
+    border-top: 1px solid #ddd;
+}
+
+
+/* =========================
+   Table
+========================= */
+
+table {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    background-color: white;
+
+    border-collapse: collapse;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+    table-layout: fixed;
+}
+
+
+/* =========================
+   Table Header
+========================= */
+
+thead {
+    background-color: #4f46e5;
+
+    color: white;
+}
+
+th {
+    padding: 16px;
+
+    text-align: left;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   Task Column
+========================= */
+
+.task-column {
+    width: auto;
+
+    word-wrap: break-word;
+
+    overflow-wrap: break-word;
+
+    white-space: normal;
+}
+
+
+/* =========================
+   Action Column
+========================= */
+
+.action-column {
+    width: 190px;
+
+    text-align: right;
+}
+
+
+/* =========================
+   Table Data
+========================= */
+
+td {
+    padding: 15px 16px;
+
+    border-bottom: 1px solid #eee;
+
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background-color: #f8f8ff;
+}
+
+
+/* =========================
+   Action Buttons
+========================= */
+
+.action-buttons {
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* Remove default form styling */
+.action-buttons form {
+    margin: 0;
+}
+
+
+/* =========================
+   Update Button
+========================= */
+
+.action-buttons a button {
+    padding: 8px 14px;
+
+    background-color: #f59e0b;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+.action-buttons a button:hover {
+    background-color: #d97706;
+}
+
+
+/* =========================
+   Delete Button
+========================= */
+
+.action-buttons form button {
+    padding: 8px 14px;
+
+    background-color: #ef4444;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+.action-buttons form button:hover {
+    background-color: #dc2626;
+}
+
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 25px 10px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    form[action="/add"] {
+        flex-direction: column;
+    }
+
+    form[action="/add"] button {
+        width: 100%;
+    }
+
+    .action-column {
+        width: 150px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+
+        align-items: flex-end;
+    }
+
+    .action-buttons a button,
+    .action-buttons form button {
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 10px;
+    }
+}
+
