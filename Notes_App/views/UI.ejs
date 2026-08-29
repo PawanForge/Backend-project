@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notes App</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header class="header">
+
+            <div>
+                <h1>My Notes</h1>
+                <p>Keep your thoughts organized</p>
+            </div>
+
+        </header>
+
+        <form action="/add" method="POST" class="note-form">
+
+            <input
+                type="text"
+                name="note"
+                placeholder="Write your note..."
+                required
+            >
+
+            <button type="submit">
+                + Add Note
+            </button>
+
+        </form>
+
+        <div class="notes">
+
+            <% notes.forEach(note => { %>
+
+                <div class="note">
+
+                    <div class="note-content">
+
+                        <h3>My Note</h3>
+
+                        <p>
+                            <%= note.note %>
+                        </p>
+
+                    </div>
+
+                    <div class="note-actions">
+
+                        <a
+                            href="/edit/<%= note._id %>"
+                            class="edit"
+                        >
+                            Edit
+                        </a>
+
+                        <form
+                            action="/delete/<%= note._id %>"
+                            method="POST"
+                        >
+
+                            <button
+                                type="submit"
+                                class="delete"
+                            >
+                                Delete
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
