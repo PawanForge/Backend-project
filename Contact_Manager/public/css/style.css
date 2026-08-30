@@ -1,0 +1,699 @@
+
+/* ================================
+   RESET
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ================================
+   BODY
+================================ */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #f5f7fb;
+
+    color: #1f2937;
+
+    min-height: 100vh;
+
+    padding: 40px 20px;
+}
+
+
+/* ================================
+   MAIN CONTAINER
+================================ */
+
+.container {
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: auto;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 32px;
+
+    font-weight: 700;
+
+    color: #111827;
+
+    margin-bottom: 6px;
+}
+
+.header p {
+    color: #6b7280;
+
+    font-size: 15px;
+}
+
+
+/* ================================
+   SEARCH CARD
+================================ */
+
+.search-card {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    padding: 25px 28px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ================================
+   SEARCH HEADER
+================================ */
+
+.search-header {
+    margin-bottom: 18px;
+}
+
+.search-header h2 {
+    font-size: 20px;
+
+    color: #111827;
+
+    margin-bottom: 5px;
+}
+
+.search-header p {
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* ================================
+   SEARCH FORM
+================================ */
+
+.search-form {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* ================================
+   SEARCH INPUT WRAPPER
+================================ */
+
+.search-input-wrapper {
+    position: relative;
+
+    flex: 1;
+}
+
+
+/* ================================
+   SEARCH INPUT
+================================ */
+
+.search-input-wrapper input {
+    width: 100%;
+
+    height: 46px;
+
+    padding: 0 14px 0 42px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-size: 15px;
+
+    transition: all 0.2s ease;
+}
+
+.search-input-wrapper input::placeholder {
+    color: #9ca3af;
+}
+
+.search-input-wrapper input:focus {
+    outline: none;
+
+    border-color: #4f46e5;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 70, 229, 0.10);
+}
+
+
+/* ================================
+   SEARCH ICON
+================================ */
+
+.search-icon {
+    position: absolute;
+
+    left: 14px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 16px;
+
+    pointer-events: none;
+}
+
+
+/* ================================
+   SEARCH BUTTON
+================================ */
+
+.search-btn {
+    height: 46px;
+
+    padding: 0 22px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #4f46e5;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.search-btn:hover {
+    background: #4338ca;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================
+   CARDS
+================================ */
+
+.form-card,
+.contacts-card {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    padding: 28px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ================================
+   CARD HEADER
+================================ */
+
+.card-header {
+    margin-bottom: 24px;
+}
+
+.card-header h2 {
+    font-size: 20px;
+
+    color: #111827;
+
+    margin-bottom: 5px;
+}
+
+.card-header p {
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* ================================
+   CONTACT HEADER
+================================ */
+
+.contact-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.contact-count {
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    padding: 7px 13px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* ================================
+   FORM
+================================ */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #374151;
+
+    margin-bottom: 8px;
+}
+
+
+/* ================================
+   INPUT + SELECT
+================================ */
+
+input,
+select {
+    width: 100%;
+
+    height: 46px;
+
+    padding: 0 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-size: 15px;
+
+    transition: all 0.2s ease;
+}
+
+input::placeholder {
+    color: #9ca3af;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+
+    border-color: #4f46e5;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 70, 229, 0.10);
+}
+
+
+/* ================================
+   BUTTON
+================================ */
+
+.btn {
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 11px 18px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+/* ================================
+   PRIMARY BUTTON
+================================ */
+
+.btn-primary {
+    width: 100%;
+
+    background: #4f46e5;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    padding: 13px;
+}
+
+.btn-primary:hover {
+    background: #4338ca;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 750px;
+}
+
+
+/* ================================
+   TABLE HEADER
+================================ */
+
+thead {
+    background: #f9fafb;
+}
+
+th {
+    padding: 14px 15px;
+
+    text-align: left;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    color: #6b7280;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* ================================
+   TABLE DATA
+================================ */
+
+td {
+    padding: 16px 15px;
+
+    font-size: 14px;
+
+    color: #374151;
+
+    border-bottom: 1px solid #f0f0f0;
+}
+
+tbody tr {
+    transition: background 0.2s ease;
+}
+
+tbody tr:hover {
+    background: #fafbff;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ================================
+   SERIAL NUMBER
+================================ */
+
+.serial {
+    color: #9ca3af;
+
+    font-weight: 600;
+}
+
+
+/* ================================
+   NAME
+================================ */
+
+.name-box {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.avatar {
+    width: 36px;
+
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-weight: 700;
+
+    font-size: 14px;
+}
+
+.name-box span {
+    font-weight: 600;
+
+    color: #111827;
+}
+
+
+/* ================================
+   PROFESSIONAL FIELD
+================================ */
+
+.profession {
+    display: inline-block;
+
+    background: #f3f4f6;
+
+    color: #374151;
+
+    padding: 6px 10px;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/* ================================
+   ACTIONS
+================================ */
+
+.actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* ================================
+   EDIT BUTTON
+================================ */
+
+.btn-edit {
+    display: inline-block;
+
+    text-decoration: none;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    padding: 8px 13px;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+    background: #e0e7ff;
+}
+
+
+/* ================================
+   DELETE BUTTON
+================================ */
+
+.btn-delete {
+    border: none;
+
+    background: #fef2f2;
+
+    color: #dc2626;
+
+    padding: 8px 13px;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+    background: #fee2e2;
+}
+
+
+/* ================================
+   EMPTY STATE
+================================ */
+
+.empty {
+    text-align: center;
+
+    padding: 60px 20px;
+}
+
+.empty-icon {
+    font-size: 45px;
+
+    margin-bottom: 15px;
+}
+
+.empty h3 {
+    color: #374151;
+
+    margin-bottom: 7px;
+
+    font-size: 18px;
+}
+
+.empty p {
+    color: #9ca3af;
+
+    font-size: 14px;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 25px 12px;
+    }
+
+    .header h1 {
+        font-size: 26px;
+    }
+
+    .form-card,
+    .contacts-card,
+    .search-card {
+        padding: 20px;
+    }
+
+    .contact-header {
+        align-items: flex-start;
+
+        gap: 15px;
+
+        flex-direction: column;
+    }
+
+
+    /* Search mobile */
+
+    .search-form {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .search-input-wrapper,
+    .search-btn {
+        width: 100%;
+    }
+
+    .search-btn {
+        height: 46px;
+    }
+
+}

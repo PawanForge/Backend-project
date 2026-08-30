@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Update Contact</title>
+
+    <link rel="stylesheet" href="/css/update-contact.css">
+</head>
+
+<body>
+
+    <div class="page-container">
+
+        <!-- Back Button -->
+        <a href="/contacts" class="back-link">
+            ← Back to Contacts
+        </a>
+
+
+        <!-- Update Card -->
+        <div class="update-card">
+
+            <!-- Card Header -->
+            <div class="update-header">
+
+                <div class="icon-box">
+                    ✎
+                </div>
+
+                <div>
+                    <h1>Update Contact</h1>
+                    <p>Edit the contact information below.</p>
+                </div>
+
+            </div>
+
+
+            <!-- Divider -->
+            <div class="divider"></div>
+
+
+            <!-- Form -->
+            <form
+                action="/contacts/edit/<%= contact._id %>"
+                method="POST"
+            >
+
+                <!-- First Name -->
+                <div class="form-group">
+
+                    <label for="firstName">
+                        First Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        value="<%= contact.firstName %>"
+                        placeholder="Enter first name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Contact Number -->
+                <div class="form-group">
+
+                    <label for="contactNumber">
+                        Contact Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="contactNumber"
+                        name="contactNumber"
+                        value="<%= contact.contactNumber %>"
+                        placeholder="Enter 10-digit contact number"
+                        maxlength="10"
+                        pattern="[0-9]{10}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Professional Field -->
+                <div class="form-group">
+
+                    <label for="professional">
+                        Professional Field
+                    </label>
+
+                    <select
+                        id="professional"
+                        name="professional"
+                        required
+                    >
+
+                        <option value="">
+                            Select Professional Field
+                        </option>
+
+                        <option
+                            value="IT"
+                            <%= contact.professional === "IT" ? "selected" : "" %>
+                        >
+                            IT
+                        </option>
+
+                        <option
+                            value="Management"
+                            <%= contact.professional === "Management" ? "selected" : "" %>
+                        >
+                            Management
+                        </option>
+
+                        <option
+                            value="Finance"
+                            <%= contact.professional === "Finance" ? "selected" : "" %>
+                        >
+                            Finance
+                        </option>
+
+                        <option
+                            value="Marketing"
+                            <%= contact.professional === "Marketing" ? "selected" : "" %>
+                        >
+                            Marketing
+                        </option>
+
+                        <option
+                            value="Sales"
+                            <%= contact.professional === "Sales" ? "selected" : "" %>
+                        >
+                            Sales
+                        </option>
+
+                        <option
+                            value="Education"
+                            <%= contact.professional === "Education" ? "selected" : "" %>
+                        >
+                            Education
+                        </option>
+
+                        <option
+                            value="Healthcare"
+                            <%= contact.professional === "Healthcare" ? "selected" : "" %>
+                        >
+                            Healthcare
+                        </option>
+
+                        <option
+                            value="Business"
+                            <%= contact.professional === "Business" ? "selected" : "" %>
+                        >
+                            Business
+                        </option>
+
+                        <option
+                            value="Other"
+                            <%= contact.professional === "Other" ? "selected" : "" %>
+                        >
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="button-group">
+
+                    <a
+                        href="/contacts"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="update-btn"
+                    >
+                        Update Contact
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- Footer -->
+        <p class="footer-text">
+            Keep your contact information up to date.
+        </p>
+
+    </div>
+
+</body>
+
+</html>
