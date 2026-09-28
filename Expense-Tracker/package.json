@@ -1,7 +1,7 @@
 {
   "name": "expense-tracker",
   "version": "1.0.0",
-  "description": "\"An intermediate backend project built with Node.js and Express.js for practicing REST APIs, CRUD operations, and backend concepts.\"",
+  "description": "An intermediate backend project built with Node.js and Express.js for practicing REST APIs, CRUD operations, and backend concepts.",
   "homepage": "https://github.com/PawanForge/Backend-project#readme",
   "bugs": {
     "url": "https://github.com/PawanForge/Backend-project/issues"
@@ -13,8 +13,14 @@
   "license": "ISC",
   "author": "Pawan",
   "type": "module",
-  "main": "index.js",
+  "main": "Server.js",
   "scripts": {
+    "start": "nodemon Server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongodb": "^7.6.0",
+    "nodemon": "^3.1.14"
   }
 }

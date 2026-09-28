@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Transaction</title>
+
+    <link rel="stylesheet" href="/UI.css">
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- Header -->
+
+        <header class="header">
+
+            <div>
+
+                <h1>Edit Transaction</h1>
+
+                <p>
+                    Update your transaction details
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- Edit Form -->
+
+        <section class="form-section">
+
+            <div class="section-title">
+
+                <h2>Edit Transaction</h2>
+
+                <p>
+                    Change the information and save your changes.
+                </p>
+
+            </div>
+
+
+            <form
+                action="/transactions/update/<%= transaction._id %>"
+                method="POST"
+                class="transaction-form"
+            >
+
+
+                <!-- Name -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value="<%= transaction.title %>"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Amount -->
+
+                <div class="form-group">
+
+                    <label for="amount">
+                        Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        value="<%= transaction.amount %>"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Type -->
+
+                <div class="form-group">
+
+                    <label for="type">
+                        Type
+                    </label>
+
+                    <select
+                        id="type"
+                        name="type"
+                        required
+                    >
+
+                        <option
+                            value="income"
+                            <%= transaction.type === 'income' ? 'selected' : '' %>
+                        >
+                            Income
+                        </option>
+
+                        <option
+                            value="expense"
+                            <%= transaction.type === 'expense' ? 'selected' : '' %>
+                        >
+                            Expense
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Category -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Category
+                    </label>
+
+                    <select
+                        id="category"
+                        name="category"
+                    >
+
+                        <option
+                            value="Food"
+                            <%= transaction.category === 'Food' ? 'selected' : '' %>
+                        >
+                            Food
+                        </option>
+
+                        <option
+                            value="Travel"
+                            <%= transaction.category === 'Travel' ? 'selected' : '' %>
+                        >
+                            Travel
+                        </option>
+
+                        <option
+                            value="Shopping"
+                            <%= transaction.category === 'Shopping' ? 'selected' : '' %>
+                        >
+                            Shopping
+                        </option>
+
+                        <option
+                            value="Bills"
+                            <%= transaction.category === 'Bills' ? 'selected' : '' %>
+                        >
+                            Bills
+                        </option>
+
+                        <option
+                            value="Salary"
+                            <%= transaction.category === 'Salary' ? 'selected' : '' %>
+                        >
+                            Salary
+                        </option>
+
+                        <option
+                            value="Other"
+                            <%= transaction.category === 'Other' ? 'selected' : '' %>
+                        >
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Date -->
+
+                <div class="form-group">
+
+                    <label for="date">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="date"
+                        name="date"
+                        value="<%= new Date(transaction.date).toISOString().split('T')[0] %>"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="4"
+                        placeholder="Enter description"
+                    ><%= transaction.description || '' %></textarea>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="add-btn"
+                    >
+                        Update Transaction
+                    </button>
+
+
+                    <a
+                        href="/"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+        <!-- Footer -->
+
+        <footer class="footer">
+
+            <p>
+                Expense Tracker © <%= new Date().getFullYear() %>
+            </p>
+
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
