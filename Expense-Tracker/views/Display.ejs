@@ -8,7 +8,7 @@
 
     <title>Expense Tracker</title>
 
-    <link rel="stylesheet" href="/UI.css"> 
+    <link rel="stylesheet" href="/UI.css">
 </head>
 
 <body>
@@ -285,7 +285,6 @@
 
             <% if (transactions && transactions.length > 0) { %>
 
-
                 <div class="table-wrapper">
 
                     <table class="expense-table">
@@ -320,9 +319,7 @@
 
                             <% transactions.forEach(transaction => { %>
 
-
                                 <% if (transaction.type === 'expense') { %>
-
 
                                     <tr>
 
@@ -429,9 +426,7 @@
 
                                     </tr>
 
-
                                 <% } %>
-
 
                             <% }) %>
 
@@ -443,7 +438,6 @@
 
 
             <% } else { %>
-
 
                 <!-- Empty State -->
 
@@ -462,7 +456,6 @@
                     </p>
 
                 </div>
-
 
             <% } %>
 

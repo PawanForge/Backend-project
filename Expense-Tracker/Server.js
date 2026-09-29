@@ -25,11 +25,28 @@ client.connect().then((connection) => {
 
         const result = await collection.find().toArray();
 
+        let totalIncome = 0;
+        let totalExpense = 0;
+
+        result.forEach(transaction => {
+
+            if (transaction.type === "income") {
+                totalIncome += Number(transaction.amount);
+            }
+
+            if (transaction.type === "expense") {
+                totalExpense += Number(transaction.amount);
+            }
+
+        });
+
+        const balance = totalIncome - totalExpense;
+
         res.render("Display", {
             transactions: result,
-            totalIncome: 0,
-            totalExpense: 0,
-            balance: 0
+            totalIncome,
+            totalExpense,
+            balance
         });
     });
 
@@ -94,15 +111,12 @@ client.connect().then((connection) => {
 
 
     // DELETE transaction
-    app.delete("/delete/:id", async (req, res) => {
+    app.post("/transactions/delete/:id", async (req, res) => {
 
         await collection.deleteOne({
             _id: new ObjectId(req.params.id)
         });
-
-        res.json({
-            message: "Transaction deleted successfully"
-        });
+        res.redirect("/")
     });
 
 
