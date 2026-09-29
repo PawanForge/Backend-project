@@ -15,7 +15,7 @@
   "type": "module",
   "main": "Server.js",
   "scripts": {
-    "start": "nodemon Server.js",
+    "start": "noder Server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
