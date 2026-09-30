@@ -1,5 +1,5 @@
 import express from "express";
-import { MongoClient, ObjectId } from "mongodb";
+import { Collection, MongoClient, ObjectId } from "mongodb";
 
 const app = express();
 
@@ -75,9 +75,17 @@ client.connect().then((connection) => {
         res.redirect("/");
     });
 
+    app.get("/transactions/edit/:id", async (req, resp) => {
+        const result = await collection.findOne({
+            _id: new ObjectId(req.params.id)
+        })
+        resp.render("update", {
+            transaction: result,
+        })
+    })
 
     // EDIT transaction
-    app.put("/edit/:id", async (req, res) => {
+    app.post("/transactions/update/:id", async (req, res) => {
 
         const {
             title,
@@ -103,10 +111,7 @@ client.connect().then((connection) => {
                 }
             }
         );
-
-        res.json({
-            message: "Transaction updated successfully"
-        });
+        res.redirect("/")
     });
 
 
