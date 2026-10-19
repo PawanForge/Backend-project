@@ -1,0 +1,27 @@
+{
+  "name": "auth-project",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Secure server-rendered authentication app built with Express and MongoDB",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "argon2": "^0.44.0",
+    "connect-mongo": "^5.1.0",
+    "csrf-sync": "^4.2.1",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "express-session": "^1.18.2",
+    "helmet": "^8.1.0",
+    "mongoose": "^8.19.1"
+  }
+}

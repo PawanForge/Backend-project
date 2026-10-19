@@ -1,0 +1,26 @@
+<%- include('../partials/header', { title: 'Create account' }) %>
+<section class="card form-card">
+  <h1>Create your account</h1>
+  <% if (errors.length) { %>
+    <div class="notice notice-error" role="alert">
+      <ul>
+        <% errors.forEach((error) => { %><li><%= error %></li><% }) %>
+      </ul>
+    </div>
+  <% } %>
+  <form action="/register" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <label for="name">Name</label>
+    <input id="name" name="name" type="text" autocomplete="name" maxlength="80" required value="<%= values.name %>">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required value="<%= values.email %>">
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+    <p class="hint">Use 12–128 characters. Your password is stored as a one-way Argon2id hash.</p>
+    <label for="passwordConfirmation">Confirm password</label>
+    <input id="passwordConfirmation" name="passwordConfirmation" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+    <button class="button" type="submit">Register</button>
+  </form>
+  <p>Already registered? <a href="/login">Log in</a>.</p>
+</section>
+<%- include('../partials/footer') %>

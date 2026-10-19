@@ -1,0 +1,11 @@
+<%- include('partials/header', { title: 'Your profile' }) %>
+<section class="card">
+  <h1>Your profile</h1>
+  <p>You are logged in as <strong><%= user.name %></strong>.</p>
+  <p>Email: <%= user.email %></p>
+  <form action="/logout" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button class="button button-secondary" type="submit">Log out</button>
+  </form>
+</section>
+<%- include('partials/footer') %>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= title %> | Auth Project</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">Auth Project</a>
+      <nav aria-label="Main navigation">
+        <a href="/">Home</a>
+        <% if (currentUser) { %>
+          <a href="/profile">Profile</a>
+          <form class="nav-form" action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="nav-button" type="submit">Log out</button>
+          </form>
+        <% } else { %>
+          <a href="/login">Log in</a>
+          <a href="/register">Register</a>
+        <% } %>
+      </nav>
+    </header>
+    <main class="container">
+      <% if (flash) { %>
+        <p class="notice notice-<%= flash.type %>" role="status"><%= flash.message %></p>
+      <% } %>
