@@ -1,13 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Expense Tracker</title>
-
+    <title>Expense Tracker - AI & Voice Powered</title>
     <link rel="stylesheet" href="/UI.css">
 </head>
 
@@ -16,538 +13,453 @@
     <div class="container">
 
         <!-- ================= HEADER ================= -->
-
         <header class="header">
-
             <div>
                 <h1>Expense Tracker</h1>
-                <p>Manage your income and expenses easily</p>
+                <p>Track your daily expenses, manage income, and explore AI & voice features</p>
             </div>
-
+            <!-- AI Engine Indicator -->
+            <div class="ai-status-badge <%= isAiConfigured ? 'ai-active' : 'ai-offline' %>" title="<%= isAiConfigured ? 'Google Gemini AI is active' : 'Offline Rule Engine active (Add GEMINI_API_KEY in .env for Gemini)' %>">
+                <span class="status-indicator"></span>
+                <span><%= isAiConfigured ? 'Gemini AI Active' : 'Offline Heuristic Mode' %></span>
+            </div>
         </header>
 
+        <!-- ================= ALERTS / NOTIFICATIONS ================= -->
+        <% if (success) { %>
+            <div class="alert alert-success">
+                <span class="alert-icon">✓</span>
+                <span><%= success %></span>
+            </div>
+        <% } %>
 
-        <!-- ================= SUMMARY ================= -->
+        <% if (error) { %>
+            <div class="alert alert-error">
+                <span class="alert-icon">⚠</span>
+                <span><%= error %></span>
+            </div>
+        <% } %>
 
-        <section class="summary">
-
-            <!-- Balance -->
-
-            <div class="summary-card balance-card">
-
-                <div class="card-label">
-                    Current Balance
+        <!-- ================= VOICE & NATURAL LANGUAGE COMMAND BAR ================= -->
+        <section class="voice-command-section">
+            <div class="voice-command-header">
+                <div class="voice-title">
+                    <span class="sparkle-icon">🎙️</span>
+                    <h3>Voice & Natural Language Assistant</h3>
                 </div>
-
-                <h2>
-                    ₹<%= Number(balance || 0).toFixed(2) %>
-                </h2>
-
+                <div class="voice-badge">Web Speech API</div>
             </div>
 
+            <div class="voice-bar-wrapper">
+                <!-- Language Selector for Speech Recognition -->
+                <select id="voiceLangSelect" class="voice-lang-select" title="Voice Recognition Language">
+                    <option value="en-IN">🇬🇧 English</option>
+                    <option value="hi-IN" selected>🇮🇳 हिन्दी / Hinglish</option>
+                </select>
 
-            <!-- Income -->
+                <!-- Microphone Action Button -->
+                <button type="button" class="mic-btn" id="micBtn" title="Click to speak (e.g. 'Add 500 for petrol' or 'Aaj 250 lunch par kharch kiye')">
+                    <span class="mic-icon">🎤</span>
+                </button>
 
-            <div class="summary-card income-card">
-
-                <div class="card-label">
-                    Total Income
-                </div>
-
-                <h2>
-                    ₹<%= Number(totalIncome || 0).toFixed(2) %>
-                </h2>
-
+                <!-- Typed Command Fallback Form -->
+                <form id="cmdForm" class="cmd-form">
+                    <input
+                        type="text"
+                        id="cmdInput"
+                        class="cmd-input"
+                        placeholder="Speak or type command (e.g. 'Add 500 for petrol', 'Aaj 250 lunch par kharch kiye', 'Mera last expense edit karo')..."
+                        autocomplete="off"
+                    >
+                    <button type="submit" class="cmd-submit-btn">Run</button>
+                </form>
             </div>
 
-
-            <!-- Expense -->
-
-            <div class="summary-card expense-card">
-
-                <div class="card-label">
-                    Total Expenses
-                </div>
-
-                <h2>
-                    ₹<%= Number(totalExpense || 0).toFixed(2) %>
-                </h2>
-
+            <!-- Active Transcript Preview Pill -->
+            <div id="transcriptPreview" class="transcript-preview" style="display: none;">
+                <span class="transcript-label">🗣️ Recognized Transcript:</span>
+                <span id="transcriptText" class="transcript-text"></span>
             </div>
 
+            <!-- Voice Status Feedback -->
+            <div id="voiceStatus" class="voice-status">
+                Say or type instructions (e.g. <em>"Add 200 food expense today"</em>, <em>"Aaj 250 lunch par kharch kiye"</em>, <em>"Mera last expense delete karo"</em>)
+            </div>
         </section>
 
-
-        <!-- ================= ADD TRANSACTION ================= -->
-
-        <section class="form-section">
-
-            <div class="section-title">
-
-                <h2>Add Transaction</h2>
-
-                <p>
-                    Add your income or expense details.
-                </p>
-
+        <!-- ================= FINANCIAL SUMMARY CARDS ================= -->
+        <section class="summary">
+            <!-- Balance Card -->
+            <div class="summary-card balance-card">
+                <div class="card-label">Net Balance</div>
+                <h2 class="<%= balance < 0 ? 'negative-balance' : '' %>">
+                    ₹<%= Number(balance || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                </h2>
             </div>
 
+            <!-- Total Income Card -->
+            <div class="summary-card income-card">
+                <div class="card-label">Total Income</div>
+                <h2>
+                    ₹<%= Number(totalIncome || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                </h2>
+            </div>
 
-            <form
-                action="/transactions"
-                method="POST"
-                class="transaction-form"
-            >
+            <!-- Total Expenses Card -->
+            <div class="summary-card expense-card">
+                <div class="card-label">Total Expenses</div>
+                <h2>
+                    ₹<%= Number(totalExpense || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                </h2>
+            </div>
+        </section>
 
+        <!-- ================= SMART SPENDING INSIGHTS & BUDGET ================= -->
+        <section class="insights-section" id="smartInsightsContainer">
+            <div class="section-title">
+                <h2>Smart Spending Insights</h2>
+                <p>Real-time analytics and category trends calculated from your MongoDB database.</p>
+            </div>
+
+            <div class="insights-grid">
+                <!-- Monthly Budget Meter Card -->
+                <div class="insight-card" id="budgetCard">
+                    <div class="card-label">Monthly Budget Status</div>
+                    <h2>Loading budget...</h2>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Month-Over-Month Comparison Card -->
+                <div class="insight-card">
+                    <div class="card-label">Monthly Spending Comparison</div>
+                    <h3 id="monthlyComparisonText">Comparing spending trends...</h3>
+                    <p class="insight-subtitle">Calculated strictly from your database history.</p>
+                </div>
+
+                <!-- Category Breakdown Card -->
+                <div class="insight-card category-insight-card">
+                    <div class="card-label">Top Spending Categories</div>
+                    <div id="categoryBreakdownList" class="category-breakdown-list">
+                        <p style="color: #9ca3af; font-size: 13px;">Analyzing recorded categories...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ADD TRANSACTION FORM ================= -->
+        <section class="form-section">
+            <div class="section-title">
+                <h2>Add Transaction</h2>
+                <p>Add your expense or income record below.</p>
+            </div>
+
+            <form action="/transactions" method="POST" class="transaction-form" id="expenseForm">
                 <div class="form-grid">
-
-                    <!-- Name -->
-
+                    <!-- Title / Name -->
                     <div class="form-group">
-
-                        <label for="title">
-                            Name
-                        </label>
-
+                        <label for="title">Title / Name *</label>
                         <input
                             type="text"
                             id="title"
                             name="title"
-                            placeholder="e.g. Grocery"
+                            placeholder="e.g. Petrol, Grocery, Rent"
                             required
+                            maxlength="100"
                         >
-
                     </div>
 
-
                     <!-- Amount -->
-
                     <div class="form-group">
-
-                        <label for="amount">
-                            Amount
-                        </label>
-
+                        <label for="amount">Amount (₹) *</label>
                         <input
                             type="number"
                             id="amount"
                             name="amount"
-                            placeholder="Enter amount"
-                            min="0"
+                            placeholder="e.g. 500"
+                            min="0.01"
                             step="0.01"
                             required
                         >
-
                     </div>
-
 
                     <!-- Type -->
-
                     <div class="form-group">
-
-                        <label for="type">
-                            Type
-                        </label>
-
-                        <select
-                            id="type"
-                            name="type"
-                            required
-                        >
-
-                            <option value="">
-                                Select Type
-                            </option>
-
-                            <option value="income">
-                                Income
-                            </option>
-
-                            <option value="expense">
-                                Expense
-                            </option>
-
+                        <label for="type">Type *</label>
+                        <select id="type" name="type" required>
+                            <option value="expense" selected>Expense</option>
+                            <option value="income">Income</option>
                         </select>
-
                     </div>
-
 
                     <!-- Category -->
-
                     <div class="form-group">
-
-                        <label for="category">
-                            Category
-                        </label>
-
-                        <select
-                            id="category"
-                            name="category"
-                        >
-
-                            <option value="">
-                                Select Category
-                            </option>
-
-                            <option value="Food">
-                                Food
-                            </option>
-
-                            <option value="Travel">
-                                Travel
-                            </option>
-
-                            <option value="Shopping">
-                                Shopping
-                            </option>
-
-                            <option value="Bills">
-                                Bills
-                            </option>
-
-                            <option value="Salary">
-                                Salary
-                            </option>
-
-                            <option value="Other">
-                                Other
-                            </option>
-
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option value="Food">Food & Dining</option>
+                            <option value="Travel">Travel & Fuel</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Bills">Bills & Utilities</option>
+                            <option value="Salary">Salary / Earning</option>
+                            <option value="Health">Health & Fitness</option>
+                            <option value="Other" selected>Other</option>
                         </select>
-
                     </div>
 
-
                     <!-- Date -->
-
                     <div class="form-group">
-
-                        <label for="date">
-                            Date
-                        </label>
-
+                        <label for="date">Date *</label>
                         <input
                             type="date"
                             id="date"
                             name="date"
                             required
                         >
-
                     </div>
 
+                    <!-- Description with AI Button -->
+                    <div class="form-group full-width">
+                        <div class="desc-header">
+                            <label for="description">Description (Optional)</label>
+                            <button type="button" class="ai-inline-btn" id="aiDescBtn" title="Generate smart note & category from Title/Amount">
+                                ✨ Generate with AI
+                            </button>
+                        </div>
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="2"
+                            placeholder="Add notes, or click 'Generate with AI' to auto-create"
+                        ></textarea>
+                    </div>
                 </div>
 
-
-                <!-- Description -->
-
-                <div class="form-group">
-
-                    <label for="description">
-                        Description
-                    </label>
-
-                    <textarea
-                        id="description"
-                        name="description"
-                        rows="3"
-                        placeholder="Enter description (optional)"
-                    ></textarea>
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="add-btn"
-                >
+                <button type="submit" class="add-btn">
                     + Add Transaction
                 </button>
-
             </form>
-
         </section>
 
-
-        <!-- ================= EXPENSE LIST ================= -->
-
+        <!-- ================= EXPENSE & TRANSACTION LIST ================= -->
         <section class="expense-section">
-
             <div class="section-title">
-
-                <h2>Expense List</h2>
-
-                <p>
-                    All your expenses are listed below.
-                </p>
-
+                <h2>Expenses & Transactions</h2>
+                <p>All recorded income and expenses stored in MongoDB.</p>
             </div>
-
 
             <% if (transactions && transactions.length > 0) { %>
-
                 <div class="table-wrapper">
-
                     <table class="expense-table">
-
                         <thead>
-
                             <tr>
-
                                 <th>#</th>
-
-                                <th>Expense Name</th>
-
+                                <th>Title</th>
+                                <th>Type</th>
                                 <th>Amount</th>
-
                                 <th>Category</th>
-
                                 <th>Date</th>
-
                                 <th>Description</th>
-
-                                <th>Action</th>
-
+                                <th>Actions</th>
                             </tr>
-
                         </thead>
-
-
                         <tbody>
+                            <% transactions.forEach((transaction, index) => { %>
+                                <tr>
+                                    <!-- Index Number -->
+                                    <td class="number-cell"><%= index + 1 %></td>
 
-                            <% let expenseNumber = 1; %>
+                                    <!-- Title -->
+                                    <td>
+                                        <div class="expense-name">
+                                            <strong><%= transaction.title %></strong>
+                                        </div>
+                                    </td>
 
+                                    <!-- Type Badge -->
+                                    <td>
+                                        <% if (transaction.type === 'income') { %>
+                                            <span class="type-badge income-badge">Income</span>
+                                        <% } else { %>
+                                            <span class="type-badge expense-badge">Expense</span>
+                                        <% } %>
+                                    </td>
 
-                            <% transactions.forEach(transaction => { %>
-
-                                <% if (transaction.type === 'expense') { %>
-
-                                    <tr>
-
-                                        <!-- Number -->
-
-                                        <td class="number-cell">
-
-                                            <%= expenseNumber++ %>
-
-                                        </td>
-
-
-                                        <!-- Name -->
-
-                                        <td>
-
-                                            <div class="expense-name">
-
-                                                <strong>
-                                                    <%= transaction.title %>
-                                                </strong>
-
-                                            </div>
-
-                                        </td>
-
-
-                                        <!-- Amount -->
-
-                                        <td>
-
+                                    <!-- Amount -->
+                                    <td>
+                                        <% if (transaction.type === 'income') { %>
+                                            <span class="income-amount">
+                                                + ₹<%= Number(transaction.amount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                                            </span>
+                                        <% } else { %>
                                             <span class="expense-amount">
-
-                                                - ₹<%= Number(transaction.amount).toFixed(2) %>
-
+                                                - ₹<%= Number(transaction.amount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
                                             </span>
+                                        <% } %>
+                                    </td>
 
-                                        </td>
+                                    <!-- Category Badge -->
+                                    <td>
+                                        <span class="category-badge">
+                                            <%= transaction.category || 'Other' %>
+                                        </span>
+                                    </td>
 
+                                    <!-- Formatted Date -->
+                                    <td>
+                                        <%= transaction.date ? new Date(transaction.date + 'T00:00:00').toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '-' %>
+                                    </td>
 
-                                        <!-- Category -->
+                                    <!-- Description -->
+                                    <td class="description-cell" title="<%= transaction.description || '' %>">
+                                        <%= transaction.description && transaction.description.trim() ? transaction.description : '-' %>
+                                    </td>
 
-                                        <td>
+                                    <!-- Action Buttons -->
+                                    <td>
+                                        <div class="action-buttons">
+                                            <a
+                                                href="/transactions/edit/<%= transaction._id %>"
+                                                class="edit-btn"
+                                                title="Edit this transaction"
+                                            >
+                                                Edit
+                                            </a>
 
-                                            <span class="category-badge">
-
-                                                <%= transaction.category || 'Other' %>
-
-                                            </span>
-
-                                        </td>
-
-
-                                        <!-- Date -->
-
-                                        <td>
-
-                                            <%= new Date(transaction.date).toLocaleDateString('en-IN') %>
-
-                                        </td>
-
-
-                                        <!-- Description -->
-
-                                        <td class="description-cell">
-
-                                            <%= transaction.description || '-' %>
-
-                                        </td>
-
-
-                                        <!-- Actions -->
-
-                                        <td>
-
-                                            <div class="action-buttons">
-
-                                                <a
-                                                    href="/transactions/edit/<%= transaction._id %>"
-                                                    class="edit-btn"
+                                            <form
+                                                action="/transactions/delete/<%= transaction._id %>"
+                                                method="POST"
+                                                onsubmit="return confirm('Are you sure you want to delete \'<%= transaction.title %>\'?');"
+                                            >
+                                                <button
+                                                    type="submit"
+                                                    class="delete-btn"
+                                                    title="Delete this transaction"
                                                 >
-                                                    Edit
-                                                </a>
-
-
-                                                <form
-                                                    action="/transactions/delete/<%= transaction._id %>"
-                                                    method="POST"
-                                                    onsubmit="return confirm('Are you sure you want to delete this expense?');"
-                                                >
-
-                                                    <button
-                                                        type="submit"
-                                                        class="delete-btn"
-                                                    >
-                                                        Delete
-                                                    </button>
-
-                                                </form>
-
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-
-                                <% } %>
-
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
                             <% }) %>
-
                         </tbody>
-
                     </table>
-
                 </div>
-
-
             <% } else { %>
-
                 <!-- Empty State -->
-
                 <div class="empty-state">
-
-                    <div class="empty-icon">
-                        💰
-                    </div>
-
-                    <h3>
-                        No Expenses Found
-                    </h3>
-
-                    <p>
-                        Add your first expense to start tracking your money.
-                    </p>
-
+                    <div class="empty-icon">💰</div>
+                    <h3>No Expenses Found</h3>
+                    <p>You haven't added any expenses or income yet. Use the form or voice commands above to add your first transaction!</p>
                 </div>
-
             <% } %>
-
         </section>
 
-
-        <!-- OVERALL SUMMARY--> 
-
+        <!-- ================= OVERALL SUMMARY ================= -->
         <section class="overall-section">
-
             <div class="section-title">
-
-                <h2>Overall Summary</h2>
-
-                <p>
-                    Your complete financial overview.
-                </p>
-
+                <h2>Overall Financial Summary</h2>
+                <p>High-level overview of your tracked records.</p>
             </div>
-
 
             <div class="overall-grid">
-
-
-                <!-- Income -->
-
                 <div class="overall-item">
-
-                    <span>
-                        Total Income
-                    </span>
-
+                    <span>Total Income</span>
                     <strong class="overall-income">
-
-                        ₹<%= Number(totalIncome || 0).toFixed(2) %>
-
+                        ₹<%= Number(totalIncome || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
                     </strong>
-
                 </div>
 
-
-                <!-- Expense -->
-
                 <div class="overall-item">
-
-                    <span>
-                        Total Expenses
-                    </span>
-
+                    <span>Total Expenses</span>
                     <strong class="overall-expense">
-
-                        ₹<%= Number(totalExpense || 0).toFixed(2) %>
-
+                        ₹<%= Number(totalExpense || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
                     </strong>
-
                 </div>
-
-
-                <!-- Balance -->
 
                 <div class="overall-item">
-
-                    <span>
-                        Final Balance
-                    </span>
-
-                    <strong class="overall-balance">
-
-                        ₹<%= Number(balance || 0).toFixed(2) %>
-
+                    <span>Net Balance</span>
+                    <strong class="overall-balance <%= balance < 0 ? 'overall-negative' : '' %>">
+                        ₹<%= Number(balance || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
                     </strong>
-
                 </div>
-
-
             </div>
-
         </section>
 
-
         <!-- ================= FOOTER ================= -->
-
         <footer class="footer">
-
-            <p>
-                Expense Tracker © <%= new Date().getFullYear() %>
-            </p>
-
+            <p>Expense Tracker App • Powered by Node.js, Express & MongoDB • © <%= new Date().getFullYear() %></p>
         </footer>
 
     </div>
 
+    <!-- ================= FLOATING AI CHAT ASSISTANT ================= -->
+    <button type="button" class="floating-chat-btn" id="chatToggleBtn" title="Ask AI about your spending">
+        <span class="chat-btn-icon">💬</span>
+        <span class="chat-btn-text">AI Assistant</span>
+    </button>
+
+    <!-- Slide-over Chat Drawer -->
+    <div class="chat-drawer" id="chatDrawer">
+        <div class="chat-drawer-header">
+            <div class="chat-drawer-title">
+                <span>🤖</span>
+                <div>
+                    <h4>Financial Chat Assistant</h4>
+                    <small><%= isAiConfigured ? 'Powered by Google Gemini' : 'Offline Verified Heuristic Engine' %></small>
+                </div>
+            </div>
+            <button type="button" class="close-chat-btn" id="closeChatBtn">&times;</button>
+        </div>
+
+        <!-- Chat Conversation Messages -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message assistant">
+                <div class="message-bubble">
+                    Hello! I'm your AI Expense Assistant. Ask me anything about your spending, like:
+                    <br><br>
+                    • <em>"How much did I spend this month?"</em><br>
+                    • <em>"Which category costs me the most?"</em><br>
+                    • <em>"Compare this month with last month"</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prompt Suggestions Chips -->
+        <div class="chat-chips-container">
+            <button type="button" class="chat-chip" data-question="Main apne expenses kaise control karun?">💡 Expenses Control Plan?</button>
+            <button type="button" class="chat-chip" data-question="Where am I spending too much?">🔍 Where Spending Too Much?</button>
+            <button type="button" class="chat-chip" data-question="Mujhe paise save karne hain, kya karun?">💰 Savings Strategy?</button>
+            <button type="button" class="chat-chip" data-question="Food category mein kitna kharch hua?">🍔 Food Spending?</button>
+            <button type="button" class="chat-chip" data-question="Compare this month with last month">📊 Monthly Comparison</button>
+            <button type="button" class="chat-chip" data-question="How much did I spend this month?">📅 This Month Total</button>
+        </div>
+
+        <!-- Chat Input Form -->
+        <form id="chatForm" class="chat-form">
+            <input
+                type="text"
+                id="chatInput"
+                class="chat-input"
+                placeholder="Ask about your expenses..."
+                autocomplete="off"
+                required
+            >
+            <button type="submit" class="chat-send-btn">Send</button>
+        </form>
+    </div>
+
+    <!-- Set today's date automatically if not filled -->
+    <script>
+        const dateInput = document.getElementById('date');
+        if (dateInput && !dateInput.value) {
+            dateInput.value = new Date().toISOString().split('T')[0];
+        }
+    </script>
+
+    <!-- Load Client-side AI and Voice Controller -->
+    <script src="/client-ai.js"></script>
 </body>
 
 </html>

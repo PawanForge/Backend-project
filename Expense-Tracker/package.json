@@ -15,10 +15,13 @@
   "type": "module",
   "main": "Server.js",
   "scripts": {
-    "start": "noder Server.js",
+    "start": "node Server.js",
+    "dev": "nodemon Server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "dotenv": "^18.0.8",
+    "ejs": "^7.0.2",
     "express": "^5.2.1",
     "mongodb": "^7.6.0",
     "nodemon": "^3.1.14"
